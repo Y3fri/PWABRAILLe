@@ -1,54 +1,54 @@
 import React, { useEffect, useState } from 'react';
-import { listAF } from '../../service/af';
-import Modalaf from './Modales/Modalaf';
-import "./af.css"
+import { listQU } from '../../service/qu';
+import Modalqu from './Modales/Modalqu';
+import "./qu.css"
 import { Link } from "react-router-dom";
 
-const AF = () => {
-    const [af, setaf] = useState(null);
+const QU = () => {
+    const [qu, setqu] = useState(null);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
-    const [AfsPerPage] = useState(5);
-    const [selectedAfId, setSelectedAfId] = useState(null);
+    const [QusPerPage] = useState(5);
+    const [selectedQuId, setSelectedQuId] = useState(null);
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
             setIsLoggedIn(true);
-            listAF(setaf);
+            listQU(setqu);
         }
     }, []);
 
-    const openModal = (AfId) => {
-        setSelectedAfId(AfId);
+    const openModal = (QuId) => {
+        setSelectedQuId(QuId);
         setShowModal(true);
     };
 
     const closeModal = () => {
         setShowModal(false);
-        setSelectedAfId(null);
+        setSelectedQuId(null);
     };
 
-    const updateAfList = async () => {
-        await listAF(setaf);
+    const updateQuList = async () => {
+        await listQU(setqu);
     };
 
-    const filteredAfs = af && af.filter(Af => {
-        return Af.af_fecha.toLowerCase().includes(searchTerm.toLowerCase());
+    const filteredQus = qu && qu.filter(Qu => {
+        return Qu.qu_fecha.toLowerCase().includes(searchTerm.toLowerCase());
     });
 
-    const indexOfLastAf = currentPage * AfsPerPage;
-    const indexOfFirstAf = indexOfLastAf - AfsPerPage;
-    const currentAfs = filteredAfs && filteredAfs.slice(indexOfFirstAf, indexOfLastAf);
+    const indexOfLastQu = currentPage * QusPerPage;
+    const indexOfFirstQu = indexOfLastQu - QusPerPage;
+    const currentQus = filteredQus && filteredQus.slice(indexOfFirstQu, indexOfLastQu);
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-    const pageNumbers = filteredAfs ?
-        Array.from({ length: Math.ceil(filteredAfs.length / AfsPerPage) }, (_, i) => i + 1) :
+    const pageNumbers = filteredQus ?
+        Array.from({ length: Math.ceil(filteredQus.length / QusPerPage) }, (_, i) => i + 1) :
         [];
-    const pages = filteredAfs ?
+    const pages = filteredQus ?
         Array.from({ length: Math.min(5, pageNumbers.length) }, (_, i) => i + Math.max(1, Math.min(currentPage - 2, pageNumbers.length - 4))) :
         [];
 
@@ -66,10 +66,10 @@ const AF = () => {
                                 placeholder="Buscar por fecha"
                                 className="input-search"
                             />
-                            {showModal && <Modalaf closeModal={closeModal} updateAfList={updateAfList} AfId={selectedAfId} afs={af} />}
+                            {showModal && <Modalqu closeModal={closeModal} updateQuList={updateQuList} QuId={selectedQuId} qus={qu} />}
                         </div>
 
-                        {currentAfs ? (
+                        {currentQus ? (
                             <>
                                 <table className='tablaProducto'>
                                     <thead>
@@ -81,12 +81,12 @@ const AF = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {currentAfs.map(af => (
-                                            <tr key={af.af_id}>
-                                                <td>{af.af_fecha}</td>
-                                                <td>{af.af_hora}</td>
+                                        {currentQus.map(qu => (
+                                            <tr key={qu.qu_id}>
+                                                <td>{qu.qu_fecha}</td>
+                                                <td>{qu.qu_hora}</td>
                                                 <td>
-                                                    {af.nombre_estado === 'Activo' ? (
+                                                    {qu.nombre_estado === 'Activo' ? (
                                                         <button className="button-circle-green">
                                                             <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-check" width="10" height="10" viewBox="0 0 24 24" strokeWidth="3" stroke="#ffffff" fill="none" strokeLinecap="round" strokeLinejoin="round">
                                                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -104,7 +104,7 @@ const AF = () => {
                                                     )}
                                                 </td>
                                                 <td>
-                                                    <button className="button-edit" onClick={() => openModal(af.af_id)}>Revisar</button>
+                                                    <button className="button-edit" onClick={() => openModal(qu.qu_id)}>Revisar</button>
                                                 </td>
                                             </tr>
                                         ))}
@@ -133,4 +133,4 @@ const AF = () => {
     );
 };
 
-export default AF;
+export default QU;
