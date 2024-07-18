@@ -35,20 +35,26 @@ const AF = () => {
         await listAF(setaf);
     };
 
+    const handleClearSearch = () => {
+        setSearchTerm('');
+    };
+
     const filteredAfs = af && af.filter(Af => {
         return Af.af_fecha.toLowerCase().includes(searchTerm.toLowerCase());
     });
 
+    const reversedAfs = filteredAfs ? [...filteredAfs].reverse() : null;
+
     const indexOfLastAf = currentPage * AfsPerPage;
     const indexOfFirstAf = indexOfLastAf - AfsPerPage;
-    const currentAfs = filteredAfs && filteredAfs.slice(indexOfFirstAf, indexOfLastAf);
+    const currentAfs = reversedAfs && reversedAfs.slice(indexOfFirstAf, indexOfLastAf);
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-    const pageNumbers = filteredAfs ?
-        Array.from({ length: Math.ceil(filteredAfs.length / AfsPerPage) }, (_, i) => i + 1) :
+    const pageNumbers = reversedAfs ?
+        Array.from({ length: Math.ceil(reversedAfs.length / AfsPerPage) }, (_, i) => i + 1) :
         [];
-    const pages = filteredAfs ?
+    const pages = reversedAfs ?
         Array.from({ length: Math.min(5, pageNumbers.length) }, (_, i) => i + Math.max(1, Math.min(currentPage - 2, pageNumbers.length - 4))) :
         [];
 
@@ -56,16 +62,27 @@ const AF = () => {
         <>
             {isLoggedIn && (
                 <main className="main-producto">
-                    <h1 className="title-conte">Evaluaciones </h1>
+                    <h1 className="title-conte">Evaluaciones AF </h1>
                     <div className="contenedor-productos">
                         <div className='header-product'>
-                            <input
-                                type="text"
-                                value={searchTerm}
-                                onChange={e => setSearchTerm(e.target.value)}
-                                placeholder="Buscar por fecha"
-                                className="input-search"
-                            />
+                        <div className="search-container">
+                                <input
+                                    type="date"
+                                    value={searchTerm}
+                                    onChange={e => setSearchTerm(e.target.value)}
+                                    placeholder="Buscar por fecha"
+                                    className="input-search"
+                                />
+                                {searchTerm && (
+                                    <button className="clear-button" onClick={handleClearSearch}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-x" width="20" height="20" viewBox="0 0 24 24" strokeWidth="2" stroke="#000000" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                            <line x1="18" y1="6" x2="6" y2="18" />
+                                            <line x1="6" y1="6" x2="18" y2="18" />
+                                        </svg>
+                                    </button>
+                                )}
+                            </div>
                             {showModal && <Modalaf closeModal={closeModal} updateAfList={updateAfList} AfId={selectedAfId} afs={af} />}
                         </div>
 

@@ -35,37 +35,56 @@ const VZ = () => {
         await listVZ(setvz);
     };
 
+    const handleClearSearch = () => {
+        setSearchTerm('');
+    };
+
     const filteredVzs = vz && vz.filter(Vz => {
         return Vz.vz_fecha.toLowerCase().includes(searchTerm.toLowerCase());
     });
 
+    const reversedVzs = filteredVzs ? [...filteredVzs].reverse() : null;
+
     const indexOfLastVz = currentPage * VzsPerPage;
     const indexOfFirstVz = indexOfLastVz - VzsPerPage;
-    const currentVzs = filteredVzs && filteredVzs.slice(indexOfFirstVz, indexOfLastVz);
+    const currentVzs = reversedVzs && reversedVzs.slice(indexOfFirstVz, indexOfLastVz);
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-    const pageNumbers = filteredVzs ?
-        Array.from({ length: Math.ceil(filteredVzs.length / VzsPerPage) }, (_, i) => i + 1) :
+    const pageNumbers = reversedVzs ?
+        Array.from({ length: Math.ceil(reversedVzs.length / VzsPerPage) }, (_, i) => i + 1) :
         [];
-    const pages = filteredVzs ?
+    const pages = reversedVzs ?
         Array.from({ length: Math.min(5, pageNumbers.length) }, (_, i) => i + Math.max(1, Math.min(currentPage - 2, pageNumbers.length - 4))) :
         [];
+
 
     return (
         <>
             {isLoggedIn && (
                 <main className="main-producto">
-                    <h1 className="title-conte">Evaluaciones </h1>
+                    <h1 className="title-conte">Evaluaciones VZ</h1>
                     <div className="contenedor-productos">
                         <div className='header-product'>
-                            <input
-                                type="text"
-                                value={searchTerm}
-                                onChange={e => setSearchTerm(e.target.value)}
-                                placeholder="Buscar por fecha"
-                                className="input-search"
-                            />
+                            <div className="search-container">
+                                <input
+                                    type="Date"
+                                    value={searchTerm}
+                                    onChange={e => setSearchTerm(e.target.value)}
+                                    placeholder="Buscar por fecha"
+                                    className="input-search"
+                                />
+                                {searchTerm && (
+                                    <button className="clear-button" onClick={handleClearSearch}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-x" width="20" height="20" viewBox="0 0 24 24" strokeWidth="2" stroke="#000000" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <line x1="18" y1="6" x2="6" y2="18" />
+                                            <line x1="6" y1="6" x2="18" y2="18" />
+                                        </svg>
+                                    </button>
+                                )}
+                            </div>
+
                             {showModal && <Modalvz closeModal={closeModal} updateVzList={updateVzList} VzId={selectedVzId} vzs={vz} />}
                         </div>
 

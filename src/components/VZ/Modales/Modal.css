@@ -21,62 +21,38 @@
   
 }
 
-.close-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 20px;
-  color: #333333;
-  cursor: pointer;
+
+
+
+.preguntas > div {
+  display: inline-block;
+  width: 28%;
+  padding: 0.4rem;
+}
+
+.preguntas p {
+  margin-left: 0.8rem;
 }
 
 .form-label {
-  margin-bottom: 10px;
+  font-weight: bold;
+  margin-top: 1rem;
 }
 
-.form-input {
-  width: 100%;
+.form-checkbox {
   padding: 10px;
-  margin-bottom: 20px;
-  border: 1px solid #cccccc;
-  border-radius: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
 }
 
-.form-button {
-  padding: 10px 20px;
-  background-color: #1f481f;
-  color: #ffffff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
 
-.form-button:hover {
-  background-color: #428042;
-}
-.close-modal-button{
-  padding: 10px 20px;
-  background-color: #ff0000;
-  color: #ffffff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.close-modal-button:hover {
-  background-color: #b30000;
-}
-
-.header-product {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;    
-  margin-bottom: 2rem;
-}
 
 .language{
   font-size: 1.1rem;
-  margin: 1rem;    
+  margin: 2rem;
+  font-weight: bold;
+  padding: 1rem;   
   display: flex;
   justify-content: center;
   align-items: center;
@@ -127,3 +103,76 @@
 .check:checked:before {
   background:  #ff0000;
 }
+
+
+.form-button {
+  background-color: #000000;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.form-button:hover {
+  background-color: rgb(65, 65, 65);
+}
+
+.close-modal-button {
+  background-color: #f44336;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.close-modal-button:hover {
+  background-color: #e53935;
+}
+
+.recogida-data,
+.recogida-materiales {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  justify-content: center;
+}
+
+.recogida-data p {
+  margin: 0.5rem 2rem;
+  font-size: 1.6rem;
+
+}
+
+.recogida-materiales p {
+  margin: 1rem 0rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2rem;
+}
+
+.recogida-data strong,
+.recogida-materiales strong {
+  font-weight: bold;
+}
+
+.recogida-materiales {
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.container-details {
+  width: 100%;            
+  display: flex;
+  align-items: flex-end;
+}
+
+
+.preguntas{
+  margin: 0rem 6rem;
+}
+

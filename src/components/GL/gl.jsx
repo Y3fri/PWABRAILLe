@@ -34,21 +34,27 @@ const GL = () => {
     const updateGlList = async () => {
         await listGL(setgl);
     };
+    
+    const handleClearSearch = () => {
+        setSearchTerm('');
+    };
 
     const filteredGls = gl && gl.filter(Gl => {
         return Gl.gl_fecha.toLowerCase().includes(searchTerm.toLowerCase());
     });
 
+    const reversedGls = filteredGls ? [...filteredGls].reverse() : null;
+
     const indexOfLastGl = currentPage * GlsPerPage;
     const indexOfFirstGl = indexOfLastGl - GlsPerPage;
-    const currentGls = filteredGls && filteredGls.slice(indexOfFirstGl, indexOfLastGl);
+    const currentGls = reversedGls && reversedGls.slice(indexOfFirstGl, indexOfLastGl);
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-    const pageNumbers = filteredGls ?
-        Array.from({ length: Math.ceil(filteredGls.length / GlsPerPage) }, (_, i) => i + 1) :
+    const pageNumbers = reversedGls ?
+        Array.from({ length: Math.ceil(reversedGls.length / GlsPerPage) }, (_, i) => i + 1) :
         [];
-    const pages = filteredGls ?
+    const pages = reversedGls ?
         Array.from({ length: Math.min(5, pageNumbers.length) }, (_, i) => i + Math.max(1, Math.min(currentPage - 2, pageNumbers.length - 4))) :
         [];
 
@@ -56,16 +62,28 @@ const GL = () => {
         <>
             {isLoggedIn && (
                 <main className="main-producto">
-                    <h1 className="title-conte">Evaluaciones </h1>
+                    <h1 className="title-conte">Evaluaciones GL</h1>
                     <div className="contenedor-productos">
                         <div className='header-product'>
-                            <input
-                                type="text"
-                                value={searchTerm}
-                                onChange={e => setSearchTerm(e.target.value)}
-                                placeholder="Buscar por fecha"
-                                className="input-search"
-                            />
+                            <div className="search-container">
+                                <input
+                                    type="Date"
+                                    value={searchTerm}
+                                    onChange={e => setSearchTerm(e.target.value)}
+                                    placeholder="Buscar por fecha"
+                                    className="input-search"
+                                />
+                                {searchTerm && (
+                                    <button className="clear-button" onClick={handleClearSearch}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-x" width="20" height="20" viewBox="0 0 24 24" strokeWidth="2" stroke="#000000" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <line x1="18" y1="6" x2="6" y2="18" />
+                                            <line x1="6" y1="6" x2="18" y2="18" />
+                                        </svg>
+                                    </button>
+                                )}
+                            </div>
+
                             {showModal && <Modalgl closeModal={closeModal} updateGlList={updateGlList} GlId={selectedGlId} gls={gl} />}
                         </div>
 

@@ -33,7 +33,7 @@
 
 .reset-button {
     padding: 10px 20px;
-    background-color: #1f481f;
+    background-color: #000000;
     color: white;
     border: none;
     border-radius: 4px;
@@ -42,6 +42,6 @@
 }
 
 .reset-button:hover {
-    background-color:#50a150;
+    background-color:#111111;
 }
 
