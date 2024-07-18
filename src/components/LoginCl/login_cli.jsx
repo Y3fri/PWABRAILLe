@@ -22,9 +22,7 @@ const LoginCli = () => {
     }
   };
 
-  const handleRegister = () => {
-    navigate("../Registro");
-  };
+
 
   return (
     <div className='root-home'>
@@ -50,8 +48,7 @@ const LoginCli = () => {
           />
           <Link to="/verificaEmail" className="forgot-password-link">Olvidé mi contraseña</Link>
           {errorMessage && <p className="error-message">{errorMessage}</p>}
-          <button onClick={handleLogin} className="login-button">Iniciar Sesión</button>
-          <button onClick={handleRegister} className="login-button">Registrar</button>          
+          <button onClick={handleLogin} className="login-button">Iniciar Sesión</button>                 
           
         </div>
       </div>

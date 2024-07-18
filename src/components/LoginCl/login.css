@@ -22,7 +22,7 @@
 
 
 .login-title{
-    color: #1f481f;
+    color: #000000;
     justify-content: center;
     display: flex;
     margin-bottom: 2rem;
@@ -47,7 +47,7 @@
     width: 100%;
     margin-top: 1rem;
     padding: 1rem;
-    background-color: #1f481f;
+    background-color: #000000;
     color: #fff;
     border: none;
     border-radius: 0.5rem;
@@ -57,7 +57,7 @@
 }
 
 .login-button:hover {
-    background-color: #3f663f;
+    background-color: #101010;
 }
 
 

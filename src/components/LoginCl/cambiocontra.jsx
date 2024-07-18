@@ -22,7 +22,7 @@ const CambioContra = () => {
       await resetPassword({ token, new_password: newPassword });
       setIsLoading(false);
       setErrorMessage('');
-      navigate('/login');
+      navigate('/');
     } catch (error) {
       setIsLoading(false);
       setErrorMessage("Error al cambiar la contraseña: " + error.message);
@@ -53,7 +53,7 @@ const CambioContra = () => {
               className="input-field"
               required
             />
-            <button type="submit" className="submit-button" disabled={isLoading}>
+            <button type="submit" className="reset-button" disabled={isLoading}>
               {isLoading ? 'Cambiando...' : 'Cambiar Contraseña'}
             </button>
             {errorMessage && <p className="error-message">{errorMessage}</p>}

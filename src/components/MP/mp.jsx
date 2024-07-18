@@ -1,73 +1,74 @@
 import React, { useEffect, useState } from 'react';
-import { listAF } from '../../service/af';
-import Modalaf from './Modales/Modalaf';
-import "./af.css"
+import { listMP } from '../../service/mp';
+import Modalmp from './Modales/Modalmp';
+import "./mp.css"
 import { Link } from "react-router-dom";
 
-const AF = () => {
-    const [af, setaf] = useState(null);
+const MP = () => {
+    const [mp, setmp] = useState(null);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
-    const [AfsPerPage] = useState(5);
-    const [selectedAfId, setSelectedAfId] = useState(null);
+    const [MpsPerPage] = useState(5);
+    const [selectedMpId, setSelectedMpId] = useState(null);
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
             setIsLoggedIn(true);
-            listAF(setaf);
+            listMP(setmp);
         }
     }, []);
 
-    const openModal = (AfId) => {
-        setSelectedAfId(AfId);
+    const openModal = (MpId) => {
+        setSelectedMpId(MpId);
         setShowModal(true);
     };
 
     const closeModal = () => {
         setShowModal(false);
-        setSelectedAfId(null);
+        setSelectedMpId(null);
     };
 
-    const updateAfList = async () => {
-        await listAF(setaf);
+    const updateMpList = async () => {
+        await listMP(setmp);
     };
 
     const handleClearSearch = () => {
         setSearchTerm('');
     };
 
-    const filteredAfs = af && af.filter(Af => {
-        return Af.af_fecha.toLowerCase().includes(searchTerm.toLowerCase());
+    const filteredMps = mp && mp.filter(Mp => {
+        return Mp.mp_fecha.toLowerCase().includes(searchTerm.toLowerCase());
     });
 
-    const reversedAfs = filteredAfs ? [...filteredAfs].reverse() : null;
+    const reversedMps = filteredMps ? [...filteredMps].reverse() : null;
 
-    const indexOfLastAf = currentPage * AfsPerPage;
-    const indexOfFirstAf = indexOfLastAf - AfsPerPage;
-    const currentAfs = reversedAfs && reversedAfs.slice(indexOfFirstAf, indexOfLastAf);
+    const indexOfLastMp = currentPage * MpsPerPage;
+    const indexOfFirstMp = indexOfLastMp - MpsPerPage;
+    const currentMps = reversedMps && reversedMps.slice(indexOfFirstMp, indexOfLastMp);
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-    const pageNumbers = reversedAfs ?
-        Array.from({ length: Math.ceil(reversedAfs.length / AfsPerPage) }, (_, i) => i + 1) :
+    const pageNumbers = reversedMps ?
+        Array.from({ length: Math.ceil(reversedMps.length / MpsPerPage) }, (_, i) => i + 1) :
         [];
-    const pages = reversedAfs ?
+    const pages = reversedMps ?
         Array.from({ length: Math.min(5, pageNumbers.length) }, (_, i) => i + Math.max(1, Math.min(currentPage - 2, pageNumbers.length - 4))) :
         [];
+
 
     return (
         <>
             {isLoggedIn && (
                 <main className="main-producto">
-                    <h1 className="title-conte">Evaluaciones AF </h1>
+                    <h1 className="title-conte">Evaluaciones MP</h1>
                     <div className="contenedor-productos">
                         <div className='header-product'>
-                        <div className="search-container">
+                            <div className="search-container">
                                 <input
-                                    type="date"
+                                    type="Date"
                                     value={searchTerm}
                                     onChange={e => setSearchTerm(e.target.value)}
                                     placeholder="Buscar por fecha"
@@ -76,17 +77,18 @@ const AF = () => {
                                 {searchTerm && (
                                     <button className="clear-button" onClick={handleClearSearch}>
                                         <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-x" width="20" height="20" viewBox="0 0 24 24" strokeWidth="2" stroke="#000000" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <line x1="18" y1="6" x2="6" y2="18" />
                                             <line x1="6" y1="6" x2="18" y2="18" />
                                         </svg>
                                     </button>
                                 )}
                             </div>
-                            {showModal && <Modalaf closeModal={closeModal} updateAfList={updateAfList} AfId={selectedAfId} afs={af} />}
+
+                            {showModal && <Modalmp closeModal={closeModal} updateMpList={updateMpList} MpId={selectedMpId} mps={mp} />}
                         </div>
 
-                        {currentAfs ? (
+                        {currentMps ? (
                             <>
                                 <table className='tablaProducto'>
                                     <thead>
@@ -98,12 +100,12 @@ const AF = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {currentAfs.map(af => (
-                                            <tr key={af.af_id}>
-                                                <td>{af.af_fecha}</td>
-                                                <td>{af.af_hora}</td>
+                                        {currentMps.map(mp => (
+                                            <tr key={mp.mp_id}>
+                                                <td>{mp.mp_fecha}</td>
+                                                <td>{mp.mp_hora}</td>
                                                 <td>
-                                                    {af.nombre_estado === 'Activo' ? (
+                                                    {mp.nombre_estado === 'Activo' ? (
                                                         <button className="button-circle-green">
                                                             <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-check" width="10" height="10" viewBox="0 0 24 24" strokeWidth="3" stroke="#ffffff" fill="none" strokeLinecap="round" strokeLinejoin="round">
                                                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -121,7 +123,7 @@ const AF = () => {
                                                     )}
                                                 </td>
                                                 <td>
-                                                    <button className="button-edit" onClick={() => openModal(af.af_id)}>Revisar</button>
+                                                    <button className="button-edit" onClick={() => openModal(mp.mp_id)}>Revisar</button>
                                                 </td>
                                             </tr>
                                         ))}
@@ -150,4 +152,4 @@ const AF = () => {
     );
 };
 
-export default AF;
+export default MP;
