@@ -1,74 +1,75 @@
 import React, { useEffect, useState } from 'react';
-import { listMP } from '../../service/mp';
-import Modalmp from './Modales/Modalmp';
-import "./mp.css"
+import { listAG } from '../../service/ag';
+import Modalag from './Modales/Modalag';
+import "./ag.css"
 import { Link } from "react-router-dom";
 
-const MP = () => {
-    const [mp, setmp] = useState(null);
+const AG = () => {
+    const [ag, setag] = useState(null);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
-    const [MpsPerPage] = useState(5);
-    const [selectedMpId, setSelectedMpId] = useState(null);
+    const [AgsPerPage] = useState(5);
+    const [selectedAgId, setSelectedAgId] = useState(null);
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
             setIsLoggedIn(true);
-            listMP(setmp);
+            listAG(setag);
         }
     }, []);
 
-    const openModal = (MpId) => {
-        setSelectedMpId(MpId);
+    const openModal = (AgId) => {
+        setSelectedAgId(AgId);
         setShowModal(true);
     };
 
     const closeModal = () => {
         setShowModal(false);
-        setSelectedMpId(null);
+        setSelectedAgId(null);
     };
 
-    const updateMpList = async () => {
-        await listMP(setmp);
+    const updateAgList = async () => {
+        await listAG(setag);
     };
 
     const handleClearSearch = () => {
         setSearchTerm('');
     };
 
-    const filteredMps = mp && mp.filter(Mp => {
-        return Mp.mp_fecha.toLowerCase().includes(searchTerm.toLowerCase());
+    const filteredAgs = ag && ag.filter(Ag => {
+        return Ag.ag_fecha_inicio.toLowerCase().includes(searchTerm.toLowerCase());
     });
 
-    const reversedMps = filteredMps ? [...filteredMps].reverse() : null;
+    const reversedAgs = filteredAgs ? [...filteredAgs].reverse() : null;
 
-    const indexOfLastMp = currentPage * MpsPerPage;
-    const indexOfFirstMp = indexOfLastMp - MpsPerPage;
-    const currentMps = reversedMps && reversedMps.slice(indexOfFirstMp, indexOfLastMp);
+    const indexOfLastAg = currentPage * AgsPerPage;
+    const indexOfFirstAg = indexOfLastAg - AgsPerPage;
+    const currentAgs = reversedAgs && reversedAgs.slice(indexOfFirstAg, indexOfLastAg);
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-    const pageNumbers = reversedMps ?
-        Array.from({ length: Math.ceil(reversedMps.length / MpsPerPage) }, (_, i) => i + 1) :
+    const pageNumbers = reversedAgs ?
+        Array.from({ length: Math.ceil(reversedAgs.length / AgsPerPage) }, (_, i) => i + 1) :
         [];
-    const pages = reversedMps ?
+    const pages = reversedAgs ?
         Array.from({ length: Math.min(5, pageNumbers.length) }, (_, i) => i + Math.max(1, Math.min(currentPage - 2, pageNumbers.length - 4))) :
         [];
-
 
     return (
         <>
             {isLoggedIn && (
                 <main className="main-producto">
-                    <h1 className="title-conte">Evaluaciones MP</h1>
+                    
+                    <h1 className="title-conte">Evaluaciones AG </h1> 
+                    <Link className="aVolver" to="../Result">Volver</Link>
                     <div className="contenedor-productos">
                         <div className='header-product'>
-                            <div className="search-container">
+                        <div className="search-container">
                                 <input
-                                    type="Date"
+                                    type="date"
                                     value={searchTerm}
                                     onChange={e => setSearchTerm(e.target.value)}
                                     placeholder="Buscar por fecha"
@@ -77,35 +78,37 @@ const MP = () => {
                                 {searchTerm && (
                                     <button className="clear-button" onClick={handleClearSearch}>
                                         <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-x" width="20" height="20" viewBox="0 0 24 24" strokeWidth="2" stroke="#000000" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                                             <line x1="18" y1="6" x2="6" y2="18" />
                                             <line x1="6" y1="6" x2="18" y2="18" />
                                         </svg>
                                     </button>
                                 )}
                             </div>
-
-                            {showModal && <Modalmp closeModal={closeModal} updateMpList={updateMpList} MpId={selectedMpId} mps={mp} />}
+                            {showModal && <Modalag closeModal={closeModal} updateAgList={updateAgList} AgId={selectedAgId} ags={ag} />}
                         </div>
 
-                        {currentMps ? (
+                        {currentAgs ? (
                             <>
+                            <div className="table-responsive">
                                 <table className='tablaProducto'>
                                     <thead>
                                         <tr>
-                                            <th>Fecha</th>
-                                            <th>Hora</th>
+                                            <th>Fecha inicio</th>
+                                            <th>Hora inicio</th>
                                             <th>Revisado</th>
+                                            <th>Fecha fin</th>
+                                            <th>Hora fin</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {currentMps.map(mp => (
-                                            <tr key={mp.mp_id}>
-                                                <td>{mp.mp_fecha}</td>
-                                                <td>{mp.mp_hora}</td>
+                                        {currentAgs.map(ag => (
+                                            <tr key={ag.ag_id}>
+                                                <td>{ag.ag_fecha_inicio}</td>
+                                                <td>{ag.ag_hora_inicio}</td>
                                                 <td>
-                                                    {mp.nombre_estado === 'Activo' ? (
+                                                    {ag.nombre_estado === 'Activo' ? (
                                                         <button className="button-circle-green">
                                                             <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-check" width="10" height="10" viewBox="0 0 24 24" strokeWidth="3" stroke="#ffffff" fill="none" strokeLinecap="round" strokeLinejoin="round">
                                                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -122,13 +125,16 @@ const MP = () => {
                                                         </button>
                                                     )}
                                                 </td>
+                                                <td>{ag.ag_fecha_fin}</td>
+                                                <td>{ag.ag_hora_fin}</td>
                                                 <td>
-                                                    <button className="button-edit" onClick={() => openModal(mp.mp_id)}>Revisar</button>
+                                                    <button className="button-edit" onClick={() => openModal(ag.ag_id)}>Revisar</button>
                                                 </td>
                                             </tr>
                                         ))}
                                     </tbody>
                                 </table>
+                                </div>
                                 <ul className="pagination">
                                     <li className="page-item">
                                         <button onClick={() => paginate(1)} className="page-link">&laquo;</button>
@@ -145,11 +151,11 @@ const MP = () => {
                             </>
                         ) : ('No hay Datos')}
                     </div>
-                    <Link className="aVolver" to="../Result">Volver</Link>
+                    
                 </main>
             )}
         </>
     );
 };
 
-export default MP;
+export default AG;

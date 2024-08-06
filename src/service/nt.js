@@ -1,30 +1,30 @@
 import axios from 'axios';
 import JwtCli from '../utils/jwt';
 
-const listGL = async (state) => {
+const listNT = async (state) => {
     try {
         JwtCli();
-        const peticion = await axios.get(process.env.REACT_APP_API_URL + "/gl");
+        const peticion = await axios.get(process.env.REACT_APP_API_URL + "/nt");
         state(peticion.data);
     } catch (error) {
         throw new Error("Error al obtener la lista de productos: " + error.message);
     }
 };
 
-const listGLById = async (id) => {
+const listNTById = async (id) => {
     try {
         JwtCli();
-        const peticion = await axios.get(`${process.env.REACT_APP_API_URL}/gl/${id}`);
+        const peticion = await axios.get(`${process.env.REACT_APP_API_URL}/nt/${id}`);
         return peticion.data
     } catch (error) {
         throw new Error("Error al obtener la lista de productos: " + error.message);
     }
 };
 
-const updateGL = async (glId, data) => {
+const updateNT = async (ntId, data) => {
     try {
         JwtCli();
-        const response = await axios.put(`${process.env.REACT_APP_API_URL}/gl/${glId}`, data);
+        const response = await axios.put(`${process.env.REACT_APP_API_URL}/nt/${ntId}`, data);
 
         return response.data;
     } catch (error) {
@@ -33,4 +33,4 @@ const updateGL = async (glId, data) => {
 };
 
 
-export { listGL, updateGL,listGLById };
+export { listNT, updateNT,listNTById };
