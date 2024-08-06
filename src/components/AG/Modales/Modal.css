@@ -48,6 +48,7 @@
 
 
 
+
 .language{
   font-size: 1.1rem;
   margin: 2rem;
@@ -176,3 +177,24 @@
   margin: 0rem 6rem;
 }
 
+.row1-fecha {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px; 
+}
+
+.time-container {
+  flex: 1;
+  margin: 1rem 0;
+}
+
+.time-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.form-label {
+  margin: 1px 0;
+}
