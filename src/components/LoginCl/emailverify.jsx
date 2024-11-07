@@ -6,8 +6,7 @@ import './emailverify.css'
 const Emailverify = () => {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [formSubmitted, setFormSubmitted] = useState(false);
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);  
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
@@ -16,8 +15,7 @@ const Emailverify = () => {
     if (formSubmitted) return;
     try {
       setIsLoading(true);
-      await verifyEmail({ correo: email });      
-      setShowSuccessMessage(true);
+      await verifyEmail({ correo: email });            
       setFormSubmitted(true);
       navigate("/validaCodigo");
     } catch (error) {

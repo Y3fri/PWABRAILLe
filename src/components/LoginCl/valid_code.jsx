@@ -59,7 +59,7 @@ const ValidCodeCli = () => {
                 />
               ))}
             </div>
-            <button type="submit" className="submit-button" disabled={isLoading}>
+            <button type="submit" className="reset-button" disabled={isLoading}>
               {isLoading ? 'Validando...' : 'Validar Código'}
             </button>
             {errorMessage && <p className="error-message">{errorMessage}</p>}

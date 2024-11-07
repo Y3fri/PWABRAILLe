@@ -18,33 +18,27 @@ const Home = () => {
                             <ul className="ulLayout">
                                 <li className="liLayout">            
                                     
-                                    <Link className="aLayout" to="../PruebasAF"><svg width="175" height="120" xmlns="http://www.w3.org/2000/svg">
+                                    <Link className="aLayout" to="../PruebasAG"><svg width="175" height="120" xmlns="http://www.w3.org/2000/svg">
                                         <text x="0" y="110" font-family="Arial" font-size="130" fill="white">A</text>
-                                        <text x="90" y="110" font-family="Arial" font-size="130" fill="white">F</text>
+                                        <text x="80" y="110" font-family="Arial" font-size="130" fill="white">G</text>
                                     </svg>
                                     </Link>
                                 </li>
                                 <li className="liLayout">
-                                    <Link className="aLayout" to="/gl"><svg width="175" height="120" xmlns="http://www.w3.org/2000/svg">
-                                        <text x="0" y="110" font-family="Arial" font-size="130" fill="white">G</text>
-                                        <text x="90" y="110" font-family="Arial" font-size="130" fill="white">L</text>
+                                    <Link className="aLayout" to="/PruebasHN"><svg width="175" height="120" xmlns="http://www.w3.org/2000/svg">
+                                        <text x="0" y="110" font-family="Arial" font-size="130" fill="white">H</text>
+                                        <text x="80" y="110" font-family="Arial" font-size="130" fill="white">N</text>
                                     </svg></Link>
                                 </li>
                                 <li className="liLayout">
-                                    <Link className="aLayout" to="/mp"><svg width="175" height="120" xmlns="http://www.w3.org/2000/svg">
-                                        <text x="0" y="110" font-family="Arial" font-size="128" fill="white">M</text>
-                                        <text x="95" y="110" font-family="Arial" font-size="128" fill="white">P</text>
+                                    <Link className="aLayout" to="/PruebasNT"><svg width="175" height="120" xmlns="http://www.w3.org/2000/svg">
+                                        <text x="10" y="110" font-family="Arial" font-size="122" fill="white">Ñ</text>
+                                        <text x="90" y="110" font-family="Arial" font-size="130" fill="white">T</text>
                                     </svg></Link>
-                                </li>
+                                </li>                                
                                 <li className="liLayout">
-                                    <Link className="aLayout" to="/qu"><svg width="175" height="120" xmlns="http://www.w3.org/2000/svg">
-                                        <text x="-4" y="110" font-family="Arial" font-size="130" fill="white">Q</text>
-                                        <text x="90" y="110" font-family="Arial" font-size="130" fill="white">U</text>
-                                    </svg></Link>
-                                </li>
-                                <li className="liLayout">
-                                    <Link className="aLayout" to="/vz"><svg width="175" height="120" xmlns="http://www.w3.org/2000/svg">
-                                        <text x="0" y="110" font-family="Arial" font-size="130" fill="white">V</text>
+                                    <Link className="aLayout" to="/PruebasUZ"><svg width="175" height="120" xmlns="http://www.w3.org/2000/svg">
+                                        <text x="0" y="110" font-family="Arial" font-size="130" fill="white">U</text>
                                         <text x="90" y="110" font-family="Arial" font-size="130" fill="white">Z</text>
                                     </svg></Link>
                                 </li>
